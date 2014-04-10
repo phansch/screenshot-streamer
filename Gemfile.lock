@@ -27,7 +27,6 @@ GEM
       rb-inotify (>= 0.9)
     method_source (0.8.2)
     nio4r (1.0.0)
-    pg (0.17.1)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -60,7 +59,6 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv-rails
-  pg
   pry-debugger
   rerun
   sinatra

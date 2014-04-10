@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 ruby File.read(".ruby-version").strip.split("-").first
 
 gem 'sinatra'
-gem 'pg'
 gem 'thin'
 
 group :test, :development do
