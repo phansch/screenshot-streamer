@@ -8,44 +8,98 @@
   <script src="js/foundation.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/modernizr.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/placeholder.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/TimeCircles.js" type="text/javascript" charset="utf-8"></script>
   <link rel="stylesheet" href="css/normalize.css" type="text/css" />
   <link rel="stylesheet" href="css/foundation.min.css" type="text/css" />
   <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link rel="stylesheet" href="css/TimeCircles.css" type="text/css" />
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <div class="row" id="top">
-    <div class="small-12 columns">
-      <img class="th" id="last_image" src="<%= @images.last %>" />
-    </div>
-  </div>
-  <div id="thumbnails">
-    <div class="row">
-      <div class="small-12 columns">
-        <ul class="small-block-grid-<%= @images.size %>">
-          <% @images.each do |image_path| %>
-            <li><img class="th" src="<%= image_path %>" /></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div id="footer">
-    <div class="row">
-      <div class="small-12 columns">
-        Made in Berlin for Ludum Dare. Source. Follow me on <a href="https://twitter.com/phansch">Twitter</a>.
-      </div>
-    </div>
+
+  <div id="waiting">Waiting for image...</div>
+  <div id="countdown">
+    <div class="countdown" data-timer="30"></div>
   </div>
 
+  <div class="row" id="top">
+    <div class="small-12 columns">
+      <h1 class="text-center">Most recent screenshot</h1>
+      <a id="newest_image" href="<%= @images.first %>">
+        <img class="th" src="<%= @images.first %>" />
+      </a>
+    </div>
+  </div>
+  <div id="bottom">
+    <div id="thumbnails">
+      <h1 class="text-center">More screen captures</h1>
+      <ul class="small-block-grid-6">
+        <% @images.each_with_index do |image_path, index| %>
+          <% next if index == 0 %>
+          <li<%= first_last(index) %>>
+            <a href="<%= image_path %>" class="th">
+              <img src="<%= image_path %>" />
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div id="footer">
+      <div class="row">
+        <div class="small-12 columns">
+          Made in Berlin for Ludum Dare. Source. Follow me on <a href="https://twitter.com/phansch">Twitter</a>.
+          The timelapse of my work will be available after Ludum Dare.
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script type="text/javascript" charset="utf-8">
     $(function() {
-
       var es = new EventSource('/connect');
+      $(".countdown").TimeCircles().start();
+      $(".countdown").TimeCircles().stop();
+
       es.onmessage = function(e) {
         var msg = $.parseJSON(e.data);
-        $('#last_image').attr("src", "/screenshots/" + msg.filename);
+
+        $('#newest_image').attr("href", "/screenshots/" + msg.filename);
+        $('#newest_image img').attr("src", "/screenshots/" + msg.filename);
+
+        $("#waiting").css("display", "none");
+        $(".countdown").TimeCircles().restart();
+
+        // Close your eyes
+        $("#thumbnails .last").remove();
+        $("#thumbnails li").last().attr("class", "last");
+        old_li = $("#thumbnails li").first().removeAttr("class");
+        new_li = old_li.clone().prependTo(old_li.parent());
+        new_li.attr("class", "first");
+
+        img_copy = $('#newest_image').clone();
+        img_copy.removeAttr("id");
+        new_li.html(img_copy);
       };
+    });
+
+    $(".countdown").TimeCircles({
+      "animation": "smooth",
+      "bg_width": 1,
+      "fg_width": 0.04,
+      "circle_bg_color": "#EEEEEE",
+      "total_duration": 30,
+      "count_past_zero": false,
+      "start": false,
+      "time": {
+        "Days": { "show": false },
+        "Hours": { "show": false },
+        "Minutes": { "show": false },
+        "Seconds": {
+          "text": "Seconds",
+          "color": "#CCCCCC",
+          "show": true
+        }
+      }
     });
   </script>
   <script>
