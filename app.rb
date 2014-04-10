@@ -1,13 +1,10 @@
-require 'json'
 require 'sinatra'
 require 'dotenv'
 Dotenv.load
 
 # require stuff from stdlib
 require 'fileutils'
-
-
-set :server, %w[thin]
+require 'json'
 
 helpers do
   def protected!
@@ -51,9 +48,7 @@ helpers do
   end
 end
 
-
 connections = []
-notifications = []
 
 get '/' do
   @images = images
@@ -66,9 +61,6 @@ post '/screenshot/:filename' do
 
   notification = params.merge( {'timestamp' => timestamp}).to_json
 
-  notifications << notification
-
-  notifications.shift if notifications.length > 10
   connections.each { |out| out << "data: #{notification}\n\n"}
   "wrote to #{params[:filename]}\n"
 end
@@ -76,12 +68,7 @@ end
 get '/connect', provides: 'text/event-stream' do
   stream :keep_open do |out|
     connections << out
-
-    #out.callback on stream close evt. 
-    out.callback {
-      #delete the connection 
-      connections.delete(out)
-    }
+    out.callback { connections.delete(out) }
   end
 end
 
