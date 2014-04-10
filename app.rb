@@ -35,6 +35,16 @@ helpers do
     end
   end
 
+  def write_file(filename)
+    dir = File.join("public", "screenshots")
+    FileUtils.mkdir_p(dir)
+    filename = File.join(dir, params[:filename])
+    datafile = params[:data]
+    File.open(filename, 'wb') do |file|
+      file.write(datafile[:tempfile].read)
+    end
+  end
+
   def first_last(index)
     return ' class="last"' if index == images.count - 1
     return ' class="first"' if index == 1
@@ -52,13 +62,7 @@ end
 
 post '/screenshot/:filename' do
   protected!
-  dir = File.join("public", "screenshots")
-  FileUtils.mkdir_p(dir)
-  filename = File.join(dir, params[:filename])
-  datafile = params[:data]
-  File.open(filename, 'wb') do |file|
-    file.write(datafile[:tempfile].read)
-  end
+  write_file(params[:filename])
 
   notification = params.merge( {'timestamp' => timestamp}).to_json
 
@@ -66,7 +70,7 @@ post '/screenshot/:filename' do
 
   notifications.shift if notifications.length > 10
   connections.each { |out| out << "data: #{notification}\n\n"}
-  "wrote to #{filename}\n"
+  "wrote to #{params[:filename]}\n"
 end
 
 get '/connect', provides: 'text/event-stream' do
