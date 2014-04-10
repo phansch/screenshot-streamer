@@ -2,6 +2,9 @@ require 'sinatra'
 require 'dotenv'
 Dotenv.load
 
+# require stuff from stdlib
+require 'fileutils'
+
 helpers do
   def protected!
     return if authorized?
@@ -19,7 +22,14 @@ get '/' do
   "Everybody can see this page"
 end
 
-get '/screenshot' do
+post '/screenshot/:filename' do
   protected!
-  "Welcome, authenticated client"
+  dir = File.join("files", "screenshots")
+  FileUtils.mkdir_p(userdir)
+  filename = File.join(dir, params[:filename])
+  datafile = params[:data]
+  File.open(filename, 'wb') do |file|
+    file.write(datafile[:tempfile].read)
+  end
+  "wrote to #{filename}\n"
 end
