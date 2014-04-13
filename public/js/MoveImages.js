@@ -4,9 +4,16 @@ $.fn.moveImages = function(filename) {
   img_copy.removeAttr("id");
 
   // only add thumbnail if newest image has a source
-  if($("#thumbnails ul li").size() < 2 && $('#newest_image').attr("href")) {
+  if($("#thumbnails ul li").size() == 0 && $('#newest_image').attr("href")) {
     $("#thumbnails ul").prepend("<li></li>");
     $("#thumbnails li").first().html(img_copy);
+  }
+  else if($("#thumbnails ul li").size() == 1) {
+    oldFirstLi = $("#thumbnails li").first();
+    newFirstLi = oldFirstLi.clone().prependTo(oldFirstLi.parent());
+    newFirstLi.attr("class", "first");
+    oldFirstLi.attr("class", "last");
+    newFirstLi.html(img_copy);
   }
   else {
     oldFirstLi = $("#thumbnails li").first();
