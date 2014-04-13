@@ -8,6 +8,33 @@ describe("MoveImages", function() {
     fixture.remove();
   });
 
+  describe("adding the first image", function() {
+    var fixture;
+
+    beforeEach(function() {
+      loadFixtures('noImage.html');
+      fixture = $('#test');
+      fixture.moveImages("whatever.png");
+    });
+
+    afterEach(function() {
+      fixture.remove();
+    });
+
+    it('should add the correct link to the empty a href', function() {
+      expect('a#newest_image').toHaveAttr('href', '/screenshots/whatever.png');
+    });
+
+    it('should add the correct link to the empty img src', function() {
+      expect('a#newest_image img').toHaveAttr('src', '/screenshots/whatever.png');
+    });
+
+    it('should add nothing to the thumbnail list', function() {
+      console.log($('#thumbnails ul'));
+      expect($('#thumbnails ul')).not.toContainElement('li');
+    });
+  });
+
   describe("adding a second image", function() {
     var fixture;
 

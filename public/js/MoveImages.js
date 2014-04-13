@@ -4,7 +4,7 @@ $.fn.moveImages = function(filename) {
   img_copy.removeAttr("id");
 
   // only add thumbnail if newest image has a source
-  if($("#thumbnails ul li").size() < 2 || $('#newest_image').attr("href")) {
+  if($("#thumbnails ul li").size() < 2 && $('#newest_image').attr("href")) {
     $("#thumbnails ul").prepend("<li></li>");
     $("#thumbnails li").first().html(img_copy);
   }
