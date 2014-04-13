@@ -1,6 +1,10 @@
 (function ( $ ) {
-  $.fn.moveImages = function(filename) {
-    // Close your eyes for what follows might be terrible frontend code
+  $.fn.moveImages = function(options) {
+    var settings = $.extend({
+      filename: "#",
+      limitThumbnails: 6
+    }, options );
+
     img_copy = $('#newest_image').clone();
     img_copy.removeAttr("id");
 
@@ -17,17 +21,16 @@
       newFirstLi.html(img_copy);
     }
     else {
-      oldFirstLi = $("#thumbnails li").first();
+      oldFirstLi = $("#thumbnails ul li").first();
       //Remove the class attr of the first element
       oldFirstLi.removeAttr("class");
 
       // Remove the last list element if the limit is reached
-      if($('#thumbnails ul li').size() > 6) {
+      if($('#thumbnails ul li').size() >= settings.limitThumbnails) {
         $("#thumbnails ul li").last().remove();
+        // Set the class of the new last element to "last"
+        $("#thumbnails li").last().attr("class", "last");
       }
-
-      // Set the class of the new last element to "last"
-      $("#thumbnails li").last().attr("class", "last");
 
       //Copy the big image to the thumbnails
       newFirstLi = oldFirstLi.clone().prependTo(oldFirstLi.parent());
@@ -35,7 +38,7 @@
       newFirstLi.html(img_copy);
     }
 
-    $('#newest_image').attr("href", "/screenshots/" + filename);
-    $('#newest_image img').attr("src", "/screenshots/" + filename);
+    $('#newest_image').attr("href", "/screenshots/" + settings.filename);
+    $('#newest_image img').attr("src", "/screenshots/" + settings.filename);
   };
 }( jQuery ));

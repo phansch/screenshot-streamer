@@ -59,7 +59,10 @@
 
         $("#waiting").css("display", "none");
         $(".countdown").TimeCircles().restart();
-        $("body").moveImages(msg.filename);
+        $("body").moveImages({
+          filename: msg.filename
+          limitThumbnails: 6
+        });
       };
     });
 
