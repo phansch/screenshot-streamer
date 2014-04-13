@@ -7,6 +7,7 @@ gem 'thin'
 group :test, :development do
   gem 'pry-debugger'
   gem 'dotenv-rails'
+  gem 'jasmine'
 end
 
 group :development do

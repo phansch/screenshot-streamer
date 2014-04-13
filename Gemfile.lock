@@ -20,6 +20,12 @@ GEM
       dotenv (= 0.10.0)
     eventmachine (1.0.3)
     ffi (1.9.3)
+    jasmine (2.0.0)
+      jasmine-core (~> 2.0.0)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+    jasmine-core (2.0.0)
     listen (2.7.1)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
@@ -27,6 +33,7 @@ GEM
       rb-inotify (>= 0.9)
     method_source (0.8.2)
     nio4r (1.0.0)
+    phantomjs (1.9.7.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -37,6 +44,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
+    rake (10.2.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
@@ -59,6 +67,7 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv-rails
+  jasmine
   pry-debugger
   rerun
   sinatra
