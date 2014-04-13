@@ -22,7 +22,7 @@ This app accepts screenshot uploads via an API and shows the last 10 uploaded sc
 
     rake jasmine
 
-Open [localhost:8888](localhost:8888) in your browser to run the tests.
+Open [localhost:8888](localhost:8888) in your browser to run the frontend tests.
 
 ### Setting credentials
 
