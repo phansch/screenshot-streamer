@@ -9,6 +9,7 @@
     <script src="js/modernizr.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/placeholder.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/TimeCircles.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/MoveImages.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="css/normalize.css" type="text/css" />
     <link rel="stylesheet" href="css/foundation.min.css" type="text/css" />
     <link rel="stylesheet" href="css/style.css" type="text/css" />
@@ -36,7 +37,7 @@
       <ul class="small-block-grid-6">
         <% @images.each_with_index do |image_path, index| %>
           <% next if index == 0 %>
-          <li<%= first_last(index) %>>
+          <li<%= first_last(index) if @images.size > 2 %>>
             <a href="<%= image_path %>" class="th">
               <img src="<%= image_path %>" />
             </a>
@@ -56,22 +57,9 @@
       es.onmessage = function(e) {
         var msg = $.parseJSON(e.data);
 
-        $('#newest_image').attr("href", "/screenshots/" + msg.filename);
-        $('#newest_image img').attr("src", "/screenshots/" + msg.filename);
-
         $("#waiting").css("display", "none");
         $(".countdown").TimeCircles().restart();
-
-        // Close your eyes
-        $("#thumbnails .last").remove();
-        $("#thumbnails li").last().attr("class", "last");
-        old_li = $("#thumbnails li").first().removeAttr("class");
-        new_li = old_li.clone().prependTo(old_li.parent());
-        new_li.attr("class", "first");
-
-        img_copy = $('#newest_image').clone();
-        img_copy.removeAttr("id");
-        new_li.html(img_copy);
+        $("body").moveImages(msg.filename);
       };
     });
 
