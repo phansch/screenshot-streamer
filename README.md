@@ -13,6 +13,7 @@ This app accepts screenshot uploads via an API and shows the last 10 uploaded sc
 
     git clone git@github.com:phansch/screenshot-streamer.git && cd screenshot-streamer
     bundle install
+    npm install
 
 ### Starting the app
 
@@ -20,9 +21,7 @@ This app accepts screenshot uploads via an API and shows the last 10 uploaded sc
 
 ### Running the tests
 
-    rake jasmine
-
-Open [localhost:8888](localhost:8888) in your browser to run the frontend tests.
+    grunt jasmine
 
 ### Setting credentials
 

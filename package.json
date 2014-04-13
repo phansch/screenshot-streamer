@@ -1,0 +1,27 @@
+{
+  "name": "screenshot-streamer",
+  "version": "0.0.0",
+  "description": "Post screeshots via API, have them neatly appear in all clients without reloading",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "^0.4.4",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jasmine": "^0.6.3"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.4"
+  },
+  "scripts": {
+    "test": "grunt jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/phansch/screenshot-streamer.git"
+  },
+  "author": "Philipp Hansch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phansch/screenshot-streamer/issues"
+  },
+  "homepage": "https://github.com/phansch/screenshot-streamer"
+}

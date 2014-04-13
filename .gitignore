@@ -4,6 +4,7 @@ capybara-*.html
 /log
 /tmp
 /public/system
+/public/screenshots
 /spec/tmp
 **.orig
 rerun.txt
@@ -11,6 +12,7 @@ rerun.txt
 ## Environment normalisation:
 /.bundle
 /vendor/bundle
+/node_modules
 
 # these should all be checked in to normalise the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
