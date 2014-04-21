@@ -8,20 +8,13 @@
     <script src="js/foundation.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/modernizr.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/placeholder.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/TimeCircles.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/MoveImages.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="css/normalize.css" type="text/css" />
     <link rel="stylesheet" href="css/foundation.min.css" type="text/css" />
     <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <link rel="stylesheet" href="css/TimeCircles.css" type="text/css" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
   </head>
 <body>
-
-  <div id="waiting">Waiting for image...</div>
-  <div id="countdown">
-    <div class="countdown" data-timer="30"></div>
-  </div>
 
   <div class="row" id="top">
     <div class="small-12 columns">
@@ -51,42 +44,15 @@
   <script type="text/javascript" charset="utf-8">
     $(function() {
       var es = new EventSource('/connect');
-      $(".countdown").TimeCircles().start();
-      $(".countdown").TimeCircles().stop();
-
       es.onmessage = function(e) {
         var msg = $.parseJSON(e.data);
 
-        $("#waiting").css("display", "none");
-        $(".countdown").TimeCircles().restart();
         $("body").moveImages({
           filename: msg.filename
           limitThumbnails: 6
         });
       };
     });
-
-    $(".countdown").TimeCircles({
-      "animation": "smooth",
-      "bg_width": 1,
-      "fg_width": 0.04,
-      "circle_bg_color": "#EEEEEE",
-      "total_duration": 30,
-      "count_past_zero": false,
-      "start": false,
-      "time": {
-        "Days": { "show": false },
-        "Hours": { "show": false },
-        "Minutes": { "show": false },
-        "Seconds": {
-          "text": "Seconds",
-          "color": "#CCCCCC",
-          "show": true
-        }
-      }
-    });
-  </script>
-  <script>
     $(document).foundation();
   </script>
 </body>
