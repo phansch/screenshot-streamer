@@ -11,6 +11,8 @@ This app accepts screenshot uploads via an API and shows the last 10 uploaded sc
 
 ### Setup the app
 
+You will need ruby-2.1.0 and node installed before.
+
     git clone git@github.com:phansch/screenshot-streamer.git && cd screenshot-streamer
     bundle install
     npm install
@@ -29,7 +31,7 @@ Before you can post screenshots, you will need to setup the credentials.
 
 Create a `.env` file with the credentials you want:
 
-    USER=a_username
+    LOGIN=a_username
     PASS=a_password
 
 ### Posting screenshots
