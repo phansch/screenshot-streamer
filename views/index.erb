@@ -48,7 +48,7 @@
         var msg = $.parseJSON(e.data);
 
         $("body").moveImages({
-          filename: msg.filename
+          filename: msg.filename,
           limitThumbnails: 6
         });
       };
